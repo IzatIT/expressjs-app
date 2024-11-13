@@ -1,0 +1,218 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"USER_ROLES.ADMIN": {
+				"enum": [
+					"ADMIN"
+				],
+				"type": "string"
+			},
+			"USER_ROLES.CLIENT": {
+				"enum": [
+					"CLIENT"
+				],
+				"type": "string"
+			},
+			"USER_ROLES.READER": {
+				"enum": [
+					"READER"
+				],
+				"type": "string"
+			},
+			"USER_ROLES.SUPER_ADMIN": {
+				"enum": [
+					"SUPER_ADMIN"
+				],
+				"type": "string"
+			},
+			"UserRoleType": {
+				"anyOf": [
+					{
+						"$ref": "#/components/schemas/USER_ROLES.ADMIN"
+					},
+					{
+						"$ref": "#/components/schemas/USER_ROLES.CLIENT"
+					},
+					{
+						"$ref": "#/components/schemas/USER_ROLES.READER"
+					},
+					{
+						"$ref": "#/components/schemas/USER_ROLES.SUPER_ADMIN"
+					}
+				]
+			},
+			"UserAttributes": {
+				"properties": {
+					"role": {
+						"$ref": "#/components/schemas/UserRoleType"
+					},
+					"password": {
+						"type": "string"
+					},
+					"login": {
+						"type": "string"
+					},
+					"sex": {
+						"type": "boolean"
+					},
+					"inn": {
+						"type": "string"
+					},
+					"age": {
+						"type": "number",
+						"format": "double"
+					},
+					"fullname": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"role",
+					"password",
+					"login",
+					"sex",
+					"inn",
+					"age",
+					"fullname",
+					"id"
+				],
+				"type": "object"
+			},
+			"AuthResponse": {
+				"$ref": "#/components/schemas/UserAttributes"
+			},
+			"UserCreationAttributes": {
+				"properties": {
+					"role": {
+						"$ref": "#/components/schemas/UserRoleType"
+					},
+					"password": {
+						"type": "string"
+					},
+					"login": {
+						"type": "string"
+					},
+					"sex": {
+						"type": "boolean"
+					},
+					"inn": {
+						"type": "string"
+					},
+					"age": {
+						"type": "number",
+						"format": "double"
+					},
+					"fullname": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"role",
+					"password",
+					"login",
+					"sex",
+					"inn",
+					"age",
+					"fullname"
+				],
+				"type": "object"
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "poses-app",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/api/v1/user/register": {
+			"post": {
+				"operationId": "Register",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UserCreationAttributes"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/api/v1/user/login": {
+			"post": {
+				"operationId": "Authorize",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"password": {
+										"type": "string"
+									},
+									"login": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"password",
+									"login"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
